@@ -1,8 +1,10 @@
 import express from 'express'; // Import Express framework
 import cors from 'cors'; // Import CORS middleware
+import path from 'path'; // Import path module
+import { fileURLToPath } from 'url'; // Required for __dirname in ES modules
 
 // Load environment variables from .env file
-import 'dotenv/config'; 
+import 'dotenv/config';
 
 // Import AI response generation function
 import { generate } from './chatbot.js';
@@ -13,6 +15,10 @@ const app = express();
 // Use PORT from environment or default to 3001
 const port = process.env.PORT || 3001;
 
+// Fix __dirname for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // Enable CORS for frontend-backend communication
 app.use(cors());
 
@@ -20,11 +26,16 @@ app.use(cors());
 app.use(express.json());
 
 /**
+ * Serve frontend static files
+ */
+app.use(express.static(path.join(__dirname, 'frontend')));
+
+/**
  * Home route
- * Used to check if server is running
+ * Serves frontend index.html
  */
 app.get('/', (req, res) => {
-    res.send('Chatbot server is running!');
+    res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
 });
 
 /**
