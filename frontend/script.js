@@ -87,7 +87,7 @@ async function handleSendMessage() {
 
     try {
         // 3. Send the message to your backend server
-        const response = await fetch('http://localhost:3001/chat', {
+       const response = await fetch('http://localhost:3001/chat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
