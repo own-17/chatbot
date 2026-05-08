@@ -49,7 +49,7 @@ export async function generate(userMessage) {
     while (true) {
         try {
             const response = await groq.chat.completions.create({
-                model: 'llama3-70b-8192',
+                model: "llama-3.1-8b-instant",
                 messages: messages,
                 tools: [{
                     type: 'function',
