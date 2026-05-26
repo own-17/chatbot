@@ -1,11 +1,11 @@
 import Groq from 'groq-sdk';
 import { tavily } from '@tavily/core';
 
-// --- SETUP ---
+
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 const tvly = tavily({ apiKey: process.env.TAVILY_API_KEY });
 
-// --- TOOL DEFINITION ---
+
 async function webSearch({ query }) {
     console.log(`🔎 Calling web search tool with query: "${query}"`);
     try {
@@ -18,12 +18,12 @@ async function webSearch({ query }) {
     }
 }
 
-// --- MAIN LOGIC ---
+
 export async function generate(userMessage) {
     const messages = [
         {
             role: 'system',
-            // --- IMPROVED INSTRUCTIONS ---
+           
             // This new prompt clearly separates conversational answers from tool use.
             content: `You are a friendly and conversational AI assistant. Your goal is to chat like a real person.
 
@@ -79,7 +79,6 @@ export async function generate(userMessage) {
                 return responseMessage.content;
             }
 
-            // If the model decides to call a tool, execute it.
             for (const toolCall of toolCalls) {
                 if (toolCall.function.name === 'webSearch') {
                     const functionArgs = JSON.parse(toolCall.function.arguments);
